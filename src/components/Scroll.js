@@ -1,5 +1,7 @@
 import React from "react";
 
+// Scroll is a pure component/function, nothing is modified
+
 // Quand on crée un tag avec lettre majuscule (comme Scroll)
 // react ajoute automatiquement l'objet children a props
 const Scroll = (props) => {

@@ -1,6 +1,7 @@
 import React  from "react";
 import Card from "./Card";
 
+// CardList is a pure component/function, nothing is modified
 
 //When doing a loop we have to give a unique key, otherwise, react wouldnt know which card to remove if we
 //ever add something to remove a card -> key={user.id}

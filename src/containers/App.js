@@ -1,9 +1,15 @@
 import React from "react";
-import CardList from "./CardList";
-import SearchBox from "./SearchBox"
-import Scroll from "./Scroll"
+import CardList from "../components/CardList";
+import SearchBox from "../components/SearchBox"
+import Scroll from "../components/Scroll"
 import './App.css';
 
+
+// This is a smart component.  A containing component that
+// has states, lifecycle hooks, class syntax.
+
+// App is not pure (javascript definition), because it modifies state.
+//Its impossible to have just pure functions.
 
 class App extends React.Component{
     constructor(){
@@ -37,10 +43,13 @@ class App extends React.Component{
     }
 
     render(){
-        const filteredRobots = this.state.robots.filter(robot =>{
-            return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+        //destructuring
+        const {robots, searchfield} = this.state;
+
+        const filteredRobots = robots.filter(robot =>{
+            return robot.name.toLowerCase().includes(searchfield.toLowerCase());
         })
-        if(this.state.robots.length === 0){
+        if(robots.length === 0){
             return <h1>Loading....</h1>
         }else{
             return(

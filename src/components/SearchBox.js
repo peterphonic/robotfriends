@@ -1,5 +1,7 @@
 import React from "react";
 
+// SearchBox is a pure component/function, nothing is modified
+
 const SearchBox = ({searchChange}) =>{
     return(
         <div className='pad2'>

@@ -1,5 +1,8 @@
 import React from "react";
 
+
+// Card is a pure component/function, nothing is modified
+
 //without destructuring
 //const Card = (props) =>{
 
