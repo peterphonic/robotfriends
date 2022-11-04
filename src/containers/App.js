@@ -11,6 +11,8 @@ import './App.css';
 // App is not pure (javascript definition), because it modifies state.
 //Its impossible to have just pure functions.
 
+// Ony container component(smart component) can change the state
+
 class App extends React.Component{
     constructor(){
         super();
