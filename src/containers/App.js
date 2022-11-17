@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox"
 import Scroll from "../components/Scroll"
@@ -13,58 +13,42 @@ import './App.css';
 
 // Ony container component(smart component) can change the state
 
-class App extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            robots:[],
-            searchfield: ''
-        }
-    }
+function App() {
 
-    //Following function part of react.  = and => not needed
-    // Check https://reactjs.org/docs/react-component.html to understand
-    // the order of method called by react when you load the web page
-    componentDidMount(){
-        //fetch is a method that belongs to the window object.
-        //in the chrome dev console, just type 'windows'
+    const [robots, setRobots] = useState([]);
+    const [searchfield, setSearchfield] = useState('');
+
+    //useEffect is run every time App is run.  When App renders, the side effect is run.
+    useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response=>response.json())
-        .then(users => this.setState({robots:users}));
-    }
+        .then(users => setRobots(users))
+    },[]); // THe parameter is to tell useEffect when to stop the rendering.  the setRobot make App to render infinitly
+            // By having [] is a shortcut to componentDidMount.  Will be call only once.
 
-
-    //Because I am in react, I have to add = and => in  my method
-    //declaration, otherwise, the keyword "this" will refer the the html input.
-    //by adding = and => this refers to App.  This trick is not needed
-    //for the constructor and for render
-    onSearchChange = (event) => {
+    const onSearchChange = (event) => {
         //setState is a react method to change the state
-        this.setState({searchfield: event.target.value})
-    
+        setSearchfield(event.target.value)
     }
 
-    render(){
+    const filteredRobots = robots.filter(robot =>{
+        return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+    })
+
         //destructuring
-        const {robots, searchfield} = this.state;
+        //const {robots, searchfield} = this.state;
 
-        const filteredRobots = robots.filter(robot =>{
-            return robot.name.toLowerCase().includes(searchfield.toLowerCase());
-        })
-        if(robots.length === 0){
-            return <h1>Loading....</h1>
-        }else{
-            return(
-                    <div className='tc'>
-                        <h1 className='f2'>RoboFriends</h1>
-                        <SearchBox searchChange={this.onSearchChange}/>
-                        <Scroll>
-                            <CardList robots={filteredRobots}/>
-                        </Scroll>
-                    </div>
-            );
-        }
-    }
+    return !robots.length
+        ? <h1>Loading....</h1>
+        :(
+            <div className='tc'>
+                <h1 className='f2'>RoboFriends</h1>
+                <SearchBox searchChange={onSearchChange}/>
+                <Scroll>
+                    <CardList robots={filteredRobots}/>
+                </Scroll>
+            </div>
+        );
 }
 
 export default App;
